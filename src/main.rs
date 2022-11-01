@@ -1,41 +1,20 @@
 #[derive(Debug)]
-pub struct Person {
-    name: String,
-    age:i32, 
-    children: i32, 
-    fave_color: Color,
+pub enum Res<T,E> {
+    Thing(T),
+    Error(E),
 }
 
-#[derive(Debug)]
-pub enum Color {
-    Red(String), 
-    Green, 
-    Blue, 
-}
-
-impl Person {
-    pub fn print(self)-> String{
-        format!("name = {}, age= {}, children = {}", self.name, self.age, self.children)
+fn divide(a:i32, b: i32) -> Res<i32, String> {
+    if b == 0 {
+        return Res::Error("Cannot Divide By Zero".to_string());
     }
+    Res::Thing(a/b)
 }
-
 
 fn main() {
-    let p = Person {
-        name: "Pratik".to_string(), 
-        age:35 , 
-        children: 4, 
-        fave_color: Color::Green,
-    };
+    let a = divide(3, 5);
 
-    let c = Color::Red("hello".to_string());
+    let b = divide(10, 0);
 
-    match c {
-        Color::Red(s) => println!("It's Red {}", s),
-        Color::Blue => println!("It's Blue"),
-        Color::Green => println!("It's Green"),
-    }
-
-
-    println!("Person details are {:?}", p);
+    println!("a = {:?}, b = {:?}", a, b);
 }
