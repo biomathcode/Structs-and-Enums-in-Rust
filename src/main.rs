@@ -1,20 +1,48 @@
-#[derive(Debug)]
-pub enum Res<T,E> {
-    Thing(T),
-    Error(E),
+pub struct  Stepper {
+    curr:i32, 
+    step:i32, 
+    max: i32,
 }
 
-fn divide(a:i32, b: i32) -> Res<i32, String> {
-    if b == 0 {
-        return Res::Error("Cannot Divide By Zero".to_string());
+impl Iterator for Stepper {
+    type Item= i32;
+    fn next(&mut self) -> Option<i32> {
+        if self.curr >= self.max {
+            return None;
+        }
+        let res = self.curr;
+        self.curr += self.step;
+        Some(res)
     }
-    Res::Thing(a/b)
 }
 
 fn main() {
-    let a = divide(3, 5);
+    let mut n = 0;
 
-    let b = divide(10, 0);
+    let mut st = Stepper{curr: 2, step: 3, max: 15};
 
-    println!("a = {:?}, b = {:?}", a, b);
+    loop {
+        match st.next() {
+            Some(v) => println!("Something {}", v),
+            None => break,
+        }
+    }
+    loop {
+        n += 1;
+        if  n > 10 {
+            break;
+        }
+        println!("hello {}", n);
+    }
+    println!("All is Done");
+
+    // while n < 20 {
+    //     println!("hello, {}!", n);
+
+    //     n += 1;
+    // }
+
+    // for i in 1..10 {
+    //     println!("HI {}", i);
+    // }
 }
