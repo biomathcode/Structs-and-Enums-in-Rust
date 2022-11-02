@@ -1,48 +1,44 @@
-pub struct  Stepper {
-    curr:i32, 
-    step:i32, 
-    max: i32,
+#[derive(Debug, Clone)]
+pub struct Person {
+    name: String, 
+    age: i32, 
 }
 
-impl Iterator for Stepper {
-    type Item= i32;
-    fn next(&mut self) -> Option<i32> {
-        if self.curr >= self.max {
-            return None;
-        }
-        let res = self.curr;
-        self.curr += self.step;
-        Some(res)
+impl Person {
+    pub fn new(name: String, age: i32) -> Self {
+        Person { name, age}
     }
+
+    pub fn greet(&self )-> String {
+        format!("Hi, My name is {} and my age is {}", self.name, self.age)
+    }
+
+    pub fn age_up(&mut self, n:i32) {
+        self.age += n
+    } 
+
+    pub fn drop_me(self) {}
 }
 
 fn main() {
-    let mut n = 0;
 
-    let mut st = Stepper{curr: 2, step: 3, max: 15};
+    let mut p = Person::new("Pratik".to_string(), 22);
 
-    loop {
-        match st.next() {
-            Some(v) => println!("Something {}", v),
-            None => break,
-        }
-    }
-    loop {
-        n += 1;
-        if  n > 10 {
-            break;
-        }
-        println!("hello {}", n);
-    }
-    println!("All is Done");
+    p.age_up(3);
 
-    // while n < 20 {
-    //     println!("hello, {}!", n);
 
-    //     n += 1;
-    // }
+    let s  = p.greet();
 
-    // for i in 1..10 {
-    //     println!("HI {}", i);
-    // }
+    println!("Hello World {} ", s);
+
+    //p.drop_me();
+
+
+    let s2 = p.greet();
+
+    println!("Hello World {} ", s2);
+}
+
+pub fn get_age(s:&Person) -> &i32 {
+    &s.age
 }
